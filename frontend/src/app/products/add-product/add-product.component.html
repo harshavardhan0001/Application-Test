@@ -1,0 +1,58 @@
+
+<div class="btn-add">
+    <button class="btn btn-secondary" (click)="addProduct(content)">{{newButton}}</button>
+</div>
+
+<ng-template #content let-modal>
+	<div class="modal-header">
+		<h4 class="modal-title">Add Product</h4>
+		<button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+	</div>
+	<div class="modal-body">
+		<form>
+			<div class="form-group">
+				<label for="Name">Name</label>
+				<div class="input-group">
+					<input id="name"  [(ngModel)]="newProduct.name"   class="form-control" placeholder="Enter Name" name="name"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="state">State</label>
+                <div class="input-group">
+                    <input id="state"  [(ngModel)]="newProduct.state"  class="form-control" placeholder="Enter State" name="state"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="zip">Zip</label>
+                <div class="input-group">
+                    <input id="zip"  [(ngModel)]="newProduct.zip"  class="form-control" placeholder="Enter Zip" name="zip"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="amount">Amount</label>
+                <div class="input-group">
+                    <input id="amount"  [(ngModel)]="newProduct.amount"  class="form-control" placeholder="Enter Amount" name="amount"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="qty">Quantity</label>
+                <div class="input-group">
+                    <input id="qty"  [(ngModel)]="newProduct.qty"  class="form-control" placeholder="Enter Quantity" name="qty"/>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="item">Item</label>
+                <div class="input-group">
+                    <input id="item"  [(ngModel)]="newProduct.item"  class="form-control" placeholder="Enter Item Code" name="item"/>
+                </div>
+            </div>
+            
+		</form>
+	</div>
+	<div class="modal-footer">
+        <!-- <div class="btn-create"> -->
+            <button class="btn btn-secondary" (click)="createProduct()"> Create </button>
+        <!-- </div> -->
+		<button type="button" class="btn btn-light" (click)="modal.close('Close click')">Close</button>
+	</div>
+</ng-template>

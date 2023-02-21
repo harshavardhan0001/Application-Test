@@ -1,0 +1,32 @@
+
+<div class="alert" *ngIf="notifyPop"> 
+
+    <div class="alert alert-success" *ngIf="notifyMsg.success" role="alert">
+        {{notifyMsg.msg}}
+    </div>
+    <div class="alert alert-danger" *ngIf="!notifyMsg.success" role="alert">
+        {{notifyMsg.msg}}
+    </div>
+   
+</div>
+
+<app-add-product [newButton]="newButton" (newItemEvent)="createProduct($event)"></app-add-product>
+
+<div class="ag-theme-alpine">
+
+    <ag-grid-angular 
+        id="myGrid"
+        class="grid-style" 
+        [rowData] ="rowData" 
+        [columnDefs] = "columnDefs"
+        (gridReady)="onGridReady($event)"
+        (rowEditingStopped)="onRowEditingStopped($event)"
+        (rowEditingStarted)="onRowEditingStarted($event)"
+        (cellClicked)="onCellClicked($event)"
+        editType="fullRow"
+        [suppressClickEdit]="true"
+        [rowHeight]="50"
+        >
+    </ag-grid-angular>
+</div>
+

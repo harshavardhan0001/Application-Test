@@ -1,0 +1,16 @@
+
+.btn-add {
+    display:flex; 
+    justify-content:flex-end; 
+    width:100%; 
+    padding:0;
+    margin-bottom: 10px;
+}
+
+.btn-create {
+    display:flex; 
+    justify-content:flex-end; 
+    width:100%; 
+    padding:0;
+    margin-top: 10px;
+}
