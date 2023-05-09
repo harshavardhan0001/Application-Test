@@ -1,6 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, TemplateRef } from '@angular/core';
 import { NgbModal,NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Output, EventEmitter } from '@angular/core';
+import { Iproduct } from '../models/iproduct';
 
 @Component({
   selector: 'app-add-product',
@@ -12,35 +13,34 @@ export class AddProductComponent {
   newProduct:any = {}
   public modalReference: NgbActiveModal = new NgbActiveModal;
   @Input() newButton!: string;
-  @Output() newItemEvent = new EventEmitter<string>();
-  constructor(
-    private modalService: NgbModal){
-      this.newProduct = {
-        name : "",
-        state : "",
-        zip : "",
-        amount : "",
-        qty : "",
-        item : ""
-      }}
-
-      addProduct(content:any) {
-        this.newProduct = {
-          name : "",
-          state : "",
-          zip : "",
-          amount : "",
-          qty : "",
-          item : ""
-        }
-        this.modalReference = this.modalService.open(content, { centered: true  });
-      }
-      createProduct(){
-        if(this.newProduct.name == "" || this.newProduct.state == "" || this.newProduct.zip == "" || this.newProduct.item == ""){
-          alert("Name, State, Zip and Item are required fields");
-          return;
-        }
-        this.newItemEvent.emit(this.newProduct);
-        this.modalReference.close();
-      }
+  @Output() newItemEvent = new EventEmitter<Iproduct>();
+  constructor(private modalService: NgbModal){}
+/**
+ * Open's this.modalReference binding the template referred.
+ *
+ * @param {TemplateRef} content content must be modal template ref.
+ */
+  addProduct(content:any) {
+    this.newProduct = {
+      name : "",
+      state : "",
+      zip : "",
+      amount : "",
+      qty : "",
+      item : ""
+    }
+    this.modalReference = this.modalService.open(content, { centered: true  });
+  }
+  
+/**
+ * Validate create product form and emit new product data to product component.
+ */
+  createProduct(){
+    if(this.newProduct.name == "" || this.newProduct.state == "" || this.newProduct.zip == "" || this.newProduct.item == ""){
+      alert("Name, State, Zip and Item are required fields");
+      return;
+    }
+    this.newItemEvent.emit(this.newProduct);
+    this.modalReference.close();
+  }
 }

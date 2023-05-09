@@ -2,17 +2,12 @@ import { Component } from '@angular/core';
 import { ColDef } from 'ag-grid-community';
 import { BaseService } from '../services/base.service';
 import { Iresponse } from '../models/iresponse';
-import { Inotify } from './models/iproduct';
-// import { ClientSideRowModelSteps } from 'ag-grid-community';
-// import { RangeSelection } from 'ag-grid-community';
-// import { ActionCellRenderer } from './actionCell.component';
-
+import { Inotify, Iproduct } from './models/iproduct';
   
 function actionCellRenderer(params:any) {
     let eGui = document.createElement("div");
 
     let editingCells = params.api.getEditingCells();
-    // checks if the rowIndex matches in at least one of the editing cells
     let isCurrentRowEditing = editingCells.some((cell:any) => {
       return cell.rowIndex === params.node.rowIndex;
     });
@@ -71,15 +66,25 @@ export class ProductsComponent {
     private baseService: BaseService) {
   }
   
-  createProduct($event:any){
-    this.baseService.addProducts($event).subscribe((resp : Iresponse) => {
+/**
+ * Retrives data from add product components.
+ * Send new product data to service to create
+ * @param {Iproduct} event The event must be new product data.
+ */
+  createProduct($event:Iproduct){
+    this.baseService.addProducts($event).subscribe(() => {
       this.baseService.getProducts().subscribe((resp) => {
         this.rowData = resp.data;
       });
     });
   }
 
+/**
+ * On grid ready loads product list.
+ * @param {any} params The params is ag-grid api event data.
+ */
   onGridReady(params:any) {
+    console.log(params)
     this.gridApi = params.api;
     this.gridColumnApi = params.columnApi;
 
@@ -88,8 +93,11 @@ export class ProductsComponent {
     });
   }
 
+/**
+ * To handle each action button click.
+ * @param {any} params The params is ag-grid api event data.
+ */
   onCellClicked(params:any) {
-    // Handle click event for action cells
     if (params.column.colId === "action" && params.event.target.dataset.action) {
       let action = params.event.target.dataset.action;
 
@@ -123,6 +131,10 @@ export class ProductsComponent {
     }
   }
 
+/**
+ * To track row changes for updating product.
+ * @param {any} params The params is ag-grid api event data.
+ */
   onRowEditingStarted(params:any) {
     params.api.refreshCells({
       columns: ["action"],
@@ -131,6 +143,10 @@ export class ProductsComponent {
     });
   }
 
+/**
+ * Handles when row editing stops.
+ * @param {any} params The params is ag-grid api event data.
+ */
   onRowEditingStopped(params:any) {
     params.api.refreshCells({
       columns: ["action"],
@@ -139,6 +155,11 @@ export class ProductsComponent {
     });
   }
 
+/**
+ * Hanles alerts and Notifications.
+ * @param {Inotify} msg The params is ag-grid api event data.
+ * @returns void
+ */
   showNotifyPop(msg:Inotify) : void {
     this.notifyMsg = msg;
     if (this.notifyPop) { 
