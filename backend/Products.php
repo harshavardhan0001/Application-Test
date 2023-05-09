@@ -2,9 +2,11 @@
 
 include_once realpath(dirname(__FILE__)) . '\Helper.php';
 
-class Products extends Helper {
+class Products {
+    use Helper;
+
     public static function getProducts(){
-        $helper = new Helper();
+        $helper = new Products();
         $data = $helper->getData();
         $resp = [
             "status" => "success",
@@ -14,8 +16,8 @@ class Products extends Helper {
         $helper->returnResponse($resp);
     }
 
-public static function add() {
-        $helper = new Helper();
+    public static function add() {
+        $helper = new Products();
         // Get Payload Data
         $request = $helper->getPost();
         
@@ -39,8 +41,7 @@ public static function add() {
         } else {
             $resp = [
                 "status" => "error",
-                "message" => "Product already exists",
-                "data" => $data
+                "message" => "Product already exists"
             ];
 
         }
@@ -48,7 +49,7 @@ public static function add() {
     }
 
     public static function update() {
-        $helper = new Helper();
+        $helper = new Products();
         $request = $helper->getPost();
     
         $data = $helper->getData();
@@ -65,8 +66,7 @@ public static function add() {
         } else {
             $resp = [
                 "status" => "error",
-                "message" => "No product found",
-                "data" => $data
+                "message" => "No product found"
             ];
 
         }
@@ -75,7 +75,7 @@ public static function add() {
 
     public static function delete() {
         
-        $helper = new Helper();
+        $helper = new Products();
         $request = $helper->getPost();
         
         $data = $helper->getData();
@@ -91,8 +91,7 @@ public static function add() {
         } else {
             $resp = [
                 "status" => "error",
-                "message" => "No product found",
-                "data" => $data
+                "message" => "No products found"
             ];
     
         }

@@ -1,10 +1,12 @@
 -- Run backend --
 1. composer install
 2. php -S localhost:8000
+3. ng test
 ----------------------
 -- Run frontend --
 1. npm install
 2. ng serve
+3. php vendor/bin/codecept run tests/unit
 -----------------------
 ## Application Version
 1. Frontend - Anguar 10+

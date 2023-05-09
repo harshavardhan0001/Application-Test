@@ -1,6 +1,6 @@
 <?php
 
-class Helper {
+trait Helper {
     
     public static $filename = 'data.csv';
 
