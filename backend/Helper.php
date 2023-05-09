@@ -47,7 +47,7 @@ class Helper {
         $newRow["amount"] = $request["amount"];
         $newRow["qty"] = $request["qty"];
         $newRow["item"] = $request["item"];
-        $fp = fopen($filename, 'a');    
+        $fp = fopen($this::$filename, 'a');    
         fputcsv($fp, array_values($newRow));
 
         return $data;
@@ -56,7 +56,7 @@ class Helper {
         
         $data[$index] = $request; // update old data with new
 
-        $fp = fopen($filename, 'w');    
+        $fp = fopen($this::$filename, 'w');    
         fputcsv($fp, array_keys($data[0]));
         foreach ($data as $rows) {
             fputcsv($fp, array_values($rows));
@@ -66,7 +66,7 @@ class Helper {
     }
     public function deleteData($data,$index){
         
-        $fp = fopen($filename, 'w');
+        $fp = fopen($this::$filename, 'w');
         fputcsv($fp, array_keys($data[0]));
 
         array_splice($data, $index, 1); // deletes

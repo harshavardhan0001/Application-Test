@@ -73,7 +73,9 @@ export class ProductsComponent {
   
   createProduct($event:any){
     this.baseService.addProducts($event).subscribe((resp : Iresponse) => {
-      this.rowData = resp.data;
+      this.baseService.getProducts().subscribe((resp) => {
+        this.rowData = resp.data;
+      });
     });
   }
 
