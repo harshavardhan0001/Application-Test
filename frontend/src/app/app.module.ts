@@ -26,7 +26,7 @@ import { AddProductComponent } from './products/add-product/add-product.componen
     FormsModule
 
   ],
-  providers: [BaseService,HttpClient],
+  providers: [HttpClient,BaseService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

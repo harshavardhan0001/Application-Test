@@ -8,6 +8,7 @@ class Products extends Helper {
         $data = $helper->getData();
         $resp = [
             "status" => "success",
+            "message" => "Products retrived successfully",
             "data" => $data
         ];
         $helper->returnResponse($resp);
