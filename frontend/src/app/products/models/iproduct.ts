@@ -4,7 +4,7 @@ export interface Iproduct {
     state: string,
     zip: string,
     amount: number,
-    qty: number,
+    quantity: number,
     item: string
 }
 

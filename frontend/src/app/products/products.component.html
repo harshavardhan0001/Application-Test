@@ -10,7 +10,7 @@
    
 </div>
 
-<app-add-product [newButton]="newButton" (newItemEvent)="createProduct($event)"></app-add-product>
+<app-add-product (newItemEvent)="createProduct($event)"></app-add-product>
 
 <div class="ag-theme-alpine">
 
@@ -19,6 +19,7 @@
         class="grid-style" 
         [rowData] ="rowData" 
         [columnDefs] = "columnDefs"
+        [defaultColDef] = "defaultColDef"
         (gridReady)="onGridReady($event)"
         (rowEditingStopped)="onRowEditingStopped($event)"
         (rowEditingStarted)="onRowEditingStarted($event)"

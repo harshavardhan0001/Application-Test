@@ -4,17 +4,45 @@ class GetProductsCest
 {
     public function _before(ApiTester $I)
     {
-        $I->haveHttpHeader('Content-Type', 'application/json');
-        $response = $I->sendGet('/products', [ ]);
-        $I->seeResponseCodeIs(200);
-        $I->seeResponseIsJson();
     }
 
     // tests
-    public function tryToTest(ApiTester $I)
+    public function getAllProductsApi(ApiTester $I)
     {
+        $I->haveHttpHeader('Content-Type', 'application/json');
+        $I->sendGet('/products', [ ]);
+        $I->seeResponseCodeIs(200);
+        $I->seeResponseIsJson();
         $I->seeResponseContainsJson([
-            'status' => "success"
+            'message' => "Products retrieved successfully"
           ]);
+    }
+    // Check add new product
+    public function addNewProductApi(ApiTester $I)
+    {
+        $I->haveHttpHeader('Content-Type', 'application/json');
+        $I->sendPost('/products/add', ['id'=>1, 'name' => 'Product 1', 'state' => 'abcd', 'zip'=>'12456', 'amount' => 1, 'quantity' => 3, 'item' => 'a2b3']);
+        $I->seeResponseCodeIs(200);
+        $I->seeResponseIsJson();
+        $I->seeResponseContainsJson([
+            'message' => "Product added successfully"
+          ]);
+    }
+    // Check add new product
+    public function updateProductApi(ApiTester $I)
+    {
+        $I->haveHttpHeader('Content-Type', 'application/json');
+        $I->sendPost('/products/update', ['id'=>1, 'name' => 'Product 1', 'state' => 'abcd', 'zip'=>'12456', 'amount' => 2, 'quantity' => 3, 'item' => 'a2b3']);
+        $I->seeResponseCodeIs(200);
+        $I->seeResponseIsJson();
+        $I->seeResponseContainsJson([
+            'message' => "Product updated successfully"
+          ]);
+    }
+    public function deleteProductApi(ApiTester $I)
+    {
+        $I->haveHttpHeader('Content-Type', 'application/json');
+        $I->sendPost('/products/delete', ['id'=>1, 'name' => 'Product 1', 'state' => 'abcd', 'zip'=>'12456', 'amount' => 2, 'quantity' => 3, 'item' => 'a2b3']);
+        $I->seeResponseCodeIs(204);
     }
 }

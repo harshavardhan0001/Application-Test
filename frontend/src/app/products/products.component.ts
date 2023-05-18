@@ -1,31 +1,8 @@
 import { Component } from '@angular/core';
 import { ColDef } from 'ag-grid-community';
 import { BaseService } from '../services/base.service';
-import { Iresponse } from '../models/iresponse';
 import { Inotify, Iproduct } from './models/iproduct';
-  
-function actionCellRenderer(params:any) {
-    let eGui = document.createElement("div");
-
-    let editingCells = params.api.getEditingCells();
-    let isCurrentRowEditing = editingCells.some((cell:any) => {
-      return cell.rowIndex === params.node.rowIndex;
-    });
-
-    if (isCurrentRowEditing) {
-      eGui.innerHTML = `
-        <button  class="btn btn-outline-info"  data-action="update"> Update  </button>
-        <button  class="btn btn-outline-secondary"  data-action="cancel" > Cancel </button>
-        `;
-    } else {
-      eGui.innerHTML = `
-        <button class="btn btn-outline-success"  data-action="edit" > Edit  </button>
-        <button class="btn btn-outline-danger" data-action="delete" > Delete </button>
-        `;
-    }
-
-    return eGui;
-}
+import { ActionCellRenderer } from './actionCell.component';
 
 @Component({
   selector: 'app-products',
@@ -34,32 +11,34 @@ function actionCellRenderer(params:any) {
 })
 
 export class ProductsComponent {
-  public gridApi:any;
-  public gridColumnApi:any;
-  public newButton:string = "Add Product"
+  // To toggle nofication message
   public notifyPop: boolean = false;
+  // Api Response status message
   public notifyMsg: Inotify = {success:false,msg:""};
-  rowData: any = [
-  ];
+  // Holds all products data
+  rowData: any = [];
 
+  // To define column definations
   columnDefs: ColDef[] = [
     {field:'id', width: 50},
     {field:'name'},
     {field:'state', width: 100},
     {field:'zip', width:100},
     {editable: true, field:'amount', width:100},
-    {editable: true, field:'qty', width:70},
-    {field:'item', width:150},
+    {editable: true, field:'quantity', width:100},
+    {field:'item', width:100},
     {
-      headerName: "action",
+      headerName: "Action",
       minWidth: 150,
-      cellRenderer: actionCellRenderer,
+      cellRenderer: ActionCellRenderer,
       editable: false,
       colId: "action"
     }
   ];
+  
+  // To define default column definations which is applicable for all columns
   defaultColDef = {
-    editable: true
+    sortable: true
   };
 
   constructor(
@@ -84,10 +63,6 @@ export class ProductsComponent {
  * @param {any} params The params is ag-grid api event data.
  */
   onGridReady(params:any) {
-    console.log(params)
-    this.gridApi = params.api;
-    this.gridColumnApi = params.columnApi;
-
     this.baseService.getProducts().subscribe((resp) => {
       this.rowData = resp.data;
     });
@@ -100,7 +75,7 @@ export class ProductsComponent {
   onCellClicked(params:any) {
     if (params.column.colId === "action" && params.event.target.dataset.action) {
       let action = params.event.target.dataset.action;
-
+      
       if (action === "edit") {
         params.api.startEditingCell({
           rowIndex: params.node.rowIndex,
@@ -113,14 +88,14 @@ export class ProductsComponent {
           remove: [params.node.data]
         });
         this.baseService.deleteProducts(params.node.data).subscribe((resp) => {
-           resp.status == "success" ? this.showNotifyPop({success:true,msg:resp.message}) : this.showNotifyPop({success:false,msg:resp.message}) 
+           resp.status != "error" ? this.showNotifyPop({success:true,msg:resp.message}) : this.showNotifyPop({success:false,msg:resp.message}) 
         });
       }
 
       if (action === "update") {
         params.api.stopEditing(false);
         this.baseService.updateProducts(params.node.data).subscribe((resp) => {
-          resp.status == "success" ? this.showNotifyPop({success:true,msg:resp.message}) : this.showNotifyPop({success:false,msg:resp.message}) 
+          resp.status != "error" ? this.showNotifyPop({success:true,msg:resp.message}) : this.showNotifyPop({success:false,msg:resp.message}) 
         });
 
       }

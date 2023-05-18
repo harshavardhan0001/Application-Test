@@ -22,9 +22,9 @@ export class BaseService {
         return this.http.post<Iresponse>(this.apiUrl+"products/update",data);
     }
     deleteProducts(data: Iproduct) {
-        return this.http.put<Iresponse>(this.apiUrl+"products",data);
+        return this.http.put<Iresponse>(this.apiUrl+"products/delete",data);
     }
     addProducts(data: any) {
-        return this.http.post<Iresponse>(this.apiUrl+"products",data);
+        return this.http.post<Iresponse>(this.apiUrl+"products/add",data);
     }
 }
