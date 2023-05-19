@@ -1,7 +1,7 @@
 import { Component} from '@angular/core';
 import { NgbModal,NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Output, EventEmitter } from '@angular/core';
-import { Iproduct } from '../models/iproduct';
+import { Iproduct } from '../../models/iproduct';
 import { FormGroup,  Validators, FormBuilder } from '@angular/forms';
 
 @Component({

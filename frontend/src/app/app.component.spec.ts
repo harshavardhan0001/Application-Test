@@ -6,18 +6,31 @@ import { BaseService } from './services/base.service';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AgGridModule } from 'ag-grid-angular';
 import { AddProductComponent } from './products/add-product/add-product.component';
+import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BrowserModule } from '@angular/platform-browser';
+import { AppRoutingModule } from './app-routing.module';
+import { HttpClientModule } from '@angular/common/http';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, RouterTestingModule,AgGridModule], 
+      imports: [
+        BrowserModule,
+        AppRoutingModule,
+        AgGridModule,
+        HttpClientModule,
+        NgbModule,
+        FormsModule,
+        ReactiveFormsModule
+      ], 
       declarations: [
         AppComponent,
         ProductsComponent,
-        AddProductComponent
+        AddProductComponent,
       ],
       providers: [
-        BaseService 
+        BaseService
       ]
     }).compileComponents();
   });

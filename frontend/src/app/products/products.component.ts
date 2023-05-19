@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { ColDef } from 'ag-grid-community';
 import { BaseService } from '../services/base.service';
-import { Inotify, Iproduct } from './models/iproduct';
+import { Inotify, Iproduct } from '../models/iproduct';
 import { ActionCellRenderer } from './actionCell.component';
 
 @Component({

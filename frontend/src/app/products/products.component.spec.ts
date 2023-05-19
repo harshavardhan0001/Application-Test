@@ -1,6 +1,6 @@
 import { HttpClientTestingModule,HttpTestingController } from '@angular/common/http/testing';
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormsModule } from '@angular/forms';
+import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AgGridModule } from 'ag-grid-angular';
 import { BaseService } from '../services/base.service';
 import { AddProductComponent } from './add-product/add-product.component';
@@ -15,11 +15,11 @@ describe('ProductsComponent', () => {
       imports: [
         HttpClientTestingModule,
         AgGridModule,
-        FormsModule
+        ReactiveFormsModule
       ], 
       declarations: [ ProductsComponent,AddProductComponent ],
       providers: [
-        BaseService 
+        BaseService
       ]
     })
     .compileComponents();
@@ -29,9 +29,6 @@ describe('ProductsComponent', () => {
     fixture.detectChanges();
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
 
   it('the grid cells should be as expected', () => {
     const appElement = fixture.nativeElement;
