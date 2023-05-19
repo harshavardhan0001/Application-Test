@@ -17,6 +17,9 @@ class ProductController
         $this->productModel = new Product();
         $this->data = $this->productModel->getData();
         $this->request = $this->getPostParams();
+        
+        // $this->request = ["id"=> "3", "name"=> "hars", "state"=> "asdasd", "zip"=> "22222", "amount"=> 2, "quantity"=> 2, "item"=> ""];
+        
     }
 
     // Returns products, Gets data from csv at Helper trait 
@@ -29,9 +32,9 @@ class ProductController
     public function addProduct()
     {
         $errors = $this->productModel->validateProduct($this->request);
-        if ($errors) {
+        if (count($errors)) {
             // If the request validation failed, return an error response
-            $this->returnResponse(422, null, "Unprocessable Entity, Invalid product data");
+            $this->returnResponse(422, null, "Unprocessable Entity, $errors[0] ");
         } else {
             // Check if the product to be added does not exists by checking the Name
             $keys = array_column($this->productModel->getData(), 'name');
@@ -51,10 +54,11 @@ class ProductController
 
     public function updateProduct()
     {
+
         $errors = $this->productModel->validateProduct($this->request);
-        if ($errors) {
+        if (count($errors)) {
             // If the request validation failed, return an error response
-            $this->returnResponse(422, null, "Unprocessable Entity, Invalid product data");
+            $this->returnResponse(422, null, "Unprocessable Entity, $errors[0] ");
         } else {
             // Check if the product to be updated exists by checking the ID
             $keys = array_column($this->productModel->getData(), 'id');
@@ -74,9 +78,9 @@ class ProductController
     public function deleteProduct()
     {
         $errors = $this->productModel->validateProduct($this->request);
-        if ($errors) {
+        if (count($errors)) {
             // If the request validation failed, return an error response
-            $this->returnResponse(422, null, "Unprocessable Entity, Invalid product data");
+            $this->returnResponse(422, null, "Unprocessable Entity, $errors[0] ");
         } else {
             // Check if the product to be deleted exists by checking the ID
             $keys = array_column($this->productModel->getData(), 'id');

@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { ColDef } from 'ag-grid-community';
-import { BaseService } from '../services/base.service';
-import { Inotify, Iproduct } from '../models/iproduct';
-import { ActionCellRenderer } from './actionCell.component';
+import { BaseService } from '../../services/base.service';
+import { NotifyService } from '../../services/notify.service';
+import { Iproduct } from '../../models/iproduct';
+import { ActionCellRenderer } from '../../shared/actionCell.component';
 
 @Component({
   selector: 'app-products',
@@ -11,10 +12,6 @@ import { ActionCellRenderer } from './actionCell.component';
 })
 
 export class ProductsComponent {
-  // To toggle nofication message
-  public notifyPop: boolean = false;
-  // Api Response status message
-  public notifyMsg: Inotify = {success:false,msg:""};
   // Holds all products data
   rowData: any = [];
 
@@ -42,7 +39,8 @@ export class ProductsComponent {
   };
 
   constructor(
-    private baseService: BaseService) {
+    private baseService: BaseService,
+    private notifyService: NotifyService) {
   }
   
 /**
@@ -51,7 +49,8 @@ export class ProductsComponent {
  * @param {Iproduct} event The event must be new product data.
  */
   createProduct($event:Iproduct){
-    this.baseService.addProducts($event).subscribe(() => {
+    this.baseService.addProducts($event).subscribe((resp) => {
+      this.notifyService.setNewNotification({success:true,msg:resp.message})
       this.baseService.getProducts().subscribe((resp) => {
         this.rowData = resp.data;
       });
@@ -76,6 +75,7 @@ export class ProductsComponent {
     if (params.column.colId === "action" && params.event.target.dataset.action) {
       let action = params.event.target.dataset.action;
       
+      // On click of edit, shows updated and cancel buttons
       if (action === "edit") {
         params.api.startEditingCell({
           rowIndex: params.node.rowIndex,
@@ -83,25 +83,27 @@ export class ProductsComponent {
         });
       }
 
+      // On click of delete, deletes the product
       if (action === "delete") {
         params.api.applyTransaction({
           remove: [params.node.data]
         });
         this.baseService.deleteProducts(params.node.data).subscribe((resp) => {
-          this.showNotifyPop({success:true,msg:resp.message})
-            // : this.showNotifyPop({success:false,msg:resp.message}) 
+          this.notifyService.setNewNotification({success:true,msg:resp.message})
         });
       }
 
+      // On click of update, updated value sent to update api
       if (action === "update") {
         params.api.stopEditing(false);
         this.baseService.updateProducts(params.node.data).subscribe((resp) => {
-          this.showNotifyPop({success:true,msg:resp.message})
-          //  : this.showNotifyPop({success:false,msg:resp.message}) 
+          // Alerts the response message
+          this.notifyService.setNewNotification({success:true,msg:resp.message})
         });
 
       }
 
+      // On click of cancel, stops the editing
       if (action === "cancel") {
         params.api.stopEditing(true);
       }
@@ -132,17 +134,4 @@ export class ProductsComponent {
     });
   }
 
-/**
- * Hanles alerts and Notifications.
- * @param {Inotify} msg The params is ag-grid api event data.
- * @returns void
- */
-  showNotifyPop(msg:Inotify) : void {
-    this.notifyMsg = msg;
-    if (this.notifyPop) { 
-      return;
-    } 
-    this.notifyPop = true;
-    setTimeout(()=> this.notifyPop = false,2500)
-  }
 }

@@ -2,8 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AddProductComponent } from './add-product.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { Iproduct } from '../../models/iproduct';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 // Mock class for NgbModalRef
 // Mock class for NgbModalRef
 export class MockNgbModalRef {

@@ -21,7 +21,7 @@ class GetProductsCest
     public function addNewProductApi(ApiTester $I)
     {
         $I->haveHttpHeader('Content-Type', 'application/json');
-        $I->sendPost('/products/add', ['id'=>1000, 'name' => 'Product 1', 'state' => 'abcd', 'zip'=>'12456', 'amount' => 1, 'quantity' => 3, 'item' => 'a2b3']);
+        $I->sendPost('/products/add', ['id'=>1000, 'name' => 'Product a', 'state' => 'abcd', 'zip'=>'12456', 'amount' => 1, 'quantity' => 3, 'item' => 'a2b3']);
         $I->seeResponseCodeIs(200);
         $I->seeResponseIsJson();
         $I->seeResponseContainsJson([
@@ -32,7 +32,7 @@ class GetProductsCest
     public function updateProductApi(ApiTester $I)
     {
         $I->haveHttpHeader('Content-Type', 'application/json');
-        $I->sendPost('/products/update', ['id'=>1000, 'name' => 'Product 1', 'state' => 'abcd', 'zip'=>'12456', 'amount' => 2, 'quantity' => 3, 'item' => 'a2b3']);
+        $I->sendPost('/products/update', ['id'=>1000, 'name' => 'Product a', 'state' => 'abcd', 'zip'=>'12456', 'amount' => 2, 'quantity' => 3, 'item' => 'a2b3']);
         $I->seeResponseCodeIs(200);
         $I->seeResponseIsJson();
         $I->seeResponseContainsJson([
@@ -42,7 +42,7 @@ class GetProductsCest
     public function deleteProductApi(ApiTester $I)
     {
         $I->haveHttpHeader('Content-Type', 'application/json');
-        $I->sendPost('/products/delete', ['id'=>1000, 'name' => 'Product 1', 'state' => 'abcd', 'zip'=>'12456', 'amount' => 2, 'quantity' => 3, 'item' => 'a2b3']);
+        $I->sendPost('/products/delete', ['id'=>1000, 'name' => 'Product a', 'state' => 'abcd', 'zip'=>'12456', 'amount' => 2, 'quantity' => 3, 'item' => 'a2b3']);
         $I->seeResponseCodeIs(204);
     }
 }

@@ -28,6 +28,18 @@
     <span>Product List</span>
   </div>
 
+  <div class="alert" *ngIf="notifyPop"> 
+  
+    <div class="alert alert-success alert-dismissible fade show" *ngIf="notifyMsg.success" role="alert">
+        {{notifyMsg.msg}}
+        <button type="button" class="btn-close" (click)="dismissNotify()"></button>
+    </div>
+    <div class="alert alert-danger alert-dismissible fade show" *ngIf="!notifyMsg.success" role="alert">
+        {{notifyMsg.msg}}
+        <button type="button" class="btn-close" (click)="dismissNotify()"></button>
+    </div>
+   
+  </div>
   <app-products></app-products>
   <!-- Resources -->
   <!-- <h2>Resources</h2>

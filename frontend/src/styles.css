@@ -2,3 +2,11 @@
 .btn {
   margin: 5px 5px 5px 0;
 }
+.alert {
+  /* display: flex;
+  justify-content: space-around; */
+  position: absolute !important;
+  top: 0 ;
+  right: 0;
+  width: 400px;
+}

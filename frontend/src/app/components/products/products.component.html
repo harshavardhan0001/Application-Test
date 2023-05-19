@@ -1,15 +1,3 @@
-
-<div class="alert" *ngIf="notifyPop"> 
-
-    <div class="alert alert-success" *ngIf="notifyMsg.success" role="alert">
-        {{notifyMsg.msg}}
-    </div>
-    <div class="alert alert-danger" *ngIf="!notifyMsg.success" role="alert">
-        {{notifyMsg.msg}}
-    </div>
-   
-</div>
-
 <app-add-product (newItemEvent)="createProduct($event)"></app-add-product>
 
 <div class="ag-theme-alpine">

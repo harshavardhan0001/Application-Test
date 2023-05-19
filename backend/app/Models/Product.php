@@ -16,12 +16,11 @@ class Product
 
     public function addProduct($data,$request){
         // If no data in file, sets id to 1
-        if(isset($request['id'])) {
+        if(isset($request['id']) && $request['id'] != '') {
             $id = $request['id'];
         } else {
-            $id = 1 ? count($data) == 0 : $data[count($data)-1]["id"] + 1;
+            $id = count($data) == 0 ? 1 : ($data[count($data)-1]["id"] + 1);
         }
-
         $newRow = [];
         $newRow["id"] = $id;
         $newRow["name"] = $request["name"];
@@ -52,14 +51,35 @@ class Product
 
     public function validateProduct($request) {
         // Validate request parameters
-        $validation = v::key('name', v::notEmpty()->alpha(' '))
-            ->key('state', v::notEmpty()->alpha(' '))
-            ->key('zip', v::allOf(v::intVal(), v::positive(),v::notEmpty(), v::digit(5)))
-            ->key('amount', v::notEmpty()->regex('/^(?:[0-9]+(?:\.[0-9]{0,2})?)?$/'))
-            ->key('quatity', v::allOf(v::intVal(), v::positive(),v::notEmpty()))
-            ->key('item', v::alnum());
+        $name = v::notEmpty()->alpha(' ')->validate($request['name']);
+        if(!$name) {
+            return ['Invalid field value for name.'];
+        }
+        $quantity = v::allOf(v::intVal(), v::positive(),v::notEmpty())->validate($request['quantity']);
+        if(!$quantity) {
+            return ['Invalid field value for quantity.'];
+        }
+        $state = v::notEmpty()->alpha(' ')->validate($request['state']);
+        if(!$state) {
+            return ['Invalid field value for state.'];
+        }
+        $amount = v::notEmpty()->regex('/^(?:[0-9]+(?:\.[0-9]{0,2})?)?$/')->validate($request['amount']);
+        if(!$amount) {
+            return ['Invalid field value for amount.'];
+        }
+        if(isset($request['item'])) {
 
-        $result = $validation->validate($request);
-        return $result;
+            $item = v::optional(v::alnum())->validate($request['item']);
+            if(!$item) {
+                return ['Invalid field value for item.'];
+            }
+        }
+        if(isset($request['zip'])) {
+            $zip = v::optional(v::length(5,5))->validate($request['zip']);
+            if(!$zip) {
+                return ['Invalid field value for zip.'];
+            }
+        }
+        return [];
     }
 }

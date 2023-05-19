@@ -4,7 +4,8 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Iresponse } from '../models/iresponse';
 import { Iproduct } from '../models/iproduct';
-import { Observable, catchError, throwError } from 'rxjs';
+import { catchError, throwError } from 'rxjs';
+import { NotifyService } from './notify.service';
 // import { catchError, retry } from 'rxjs/operators'
 // import { throwError } from 'rxjs';
 
@@ -14,7 +15,7 @@ import { Observable, catchError, throwError } from 'rxjs';
 
 export class BaseService {
     apiUrl = "http://localhost:4200/api/";
-    constructor(private http: HttpClient){}
+    constructor(private http: HttpClient,private notifyService: NotifyService){}
 
     getProducts() {
         return this.http.get<Iresponse>(this.apiUrl+"products").pipe(
@@ -47,6 +48,8 @@ export class BaseService {
             console.error(
               `Backend returned code ${error.status}, body was: `, error.error);
           }
+          
+          this.notifyService.setNewNotification({success:false,msg:error.error.message})
           // Return an observable with a user-facing error message.
           return throwError(() => new Error('Something bad happened; please try again later.'));
     }

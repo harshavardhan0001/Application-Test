@@ -1,7 +1,7 @@
 import { Component} from '@angular/core';
 import { NgbModal,NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Output, EventEmitter } from '@angular/core';
-import { Iproduct } from '../../models/iproduct';
+import { Iproduct } from '../../../models/iproduct';
 import { FormGroup,  Validators, FormBuilder } from '@angular/forms';
 
 @Component({
@@ -11,9 +11,16 @@ import { FormGroup,  Validators, FormBuilder } from '@angular/forms';
 })
 
 export class AddProductComponent {
+  // FormGroup for adding new product
   newProduct:FormGroup;
+
+  // To alert when invalid data tried to sumbit in add product form
   submitted = false;
+  
+  // NgbActiveModel for add new product form
   public modalReference: NgbActiveModal = new NgbActiveModal;
+
+  // returns the New Product form data to product component
   @Output() newItemEvent = new EventEmitter<Iproduct>();
 
 

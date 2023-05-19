@@ -5,12 +5,12 @@ import { AgGridModule } from 'ag-grid-angular';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { ProductsComponent } from './products/products.component';
+import { ProductsComponent } from './components/products/products.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { BaseService } from './services/base.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AddProductComponent } from './products/add-product/add-product.component';
-import { ActionCellRenderer } from './products/actionCell.component';
+import { AddProductComponent } from './components/products/add-product/add-product.component';
+import { ActionCellRenderer } from './shared/actionCell.component';
 
 @NgModule({
   declarations: [

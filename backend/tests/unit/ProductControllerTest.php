@@ -13,7 +13,7 @@ class ProductControllerTest extends \Codeception\Test\Unit
         $controller = new \App\Controllers\ProductController();
 
         // Mock the request parameters
-        $controller->request = ['id'=>1000, 'name' => 'Product 1', 'state' => 'abcd', 'zip'=>12345, 'amount' => 1, 'quantity' => 2, 'item' => 'a2b3'];
+        $controller->request = ['id'=>1000, 'name' => 'Product a', 'state' => 'abcd', 'zip'=>12345, 'amount' => 1, 'quantity' => 2, 'item' => 'a2b3'];
 
         // Mock the data returned by the Product model's getData() method
         $mockData = [
@@ -34,11 +34,11 @@ class ProductControllerTest extends \Codeception\Test\Unit
         $controller = new \App\Controllers\ProductController();
 
         // Mock the request parameters
-        $controller->request = ['id'=>1000, 'name' => 'Product 1', 'state' => 'abcd', 'zip'=>'12345', 'amount' => 1, 'quantity' => 2, 'item' => 'a2b3'];
+        $controller->request = ['id'=>1000, 'name' => 'Product a', 'state' => 'abcd', 'zip'=>'12345', 'amount' => 1, 'quantity' => 2, 'item' => 'a2b3'];
 
         // Mock the data returned by the Product model's getData() method
         $mockData = [
-            ['id'=>1000, 'name' => 'Product 1', 'state' => 'abcd', 'zip'=>'12456', 'amount' => 1, 'quantity' => 3, 'item' => 'a2b3']
+            ['id'=>1000, 'name' => 'Product a', 'state' => 'abcd', 'zip'=>'12456', 'amount' => 1, 'quantity' => 3, 'item' => 'a2b3']
         ];
         // Set the mock Product model in the controller
         $reflection = new ReflectionClass(\App\Controllers\ProductController::class);
@@ -55,11 +55,11 @@ class ProductControllerTest extends \Codeception\Test\Unit
         $controller = new \App\Controllers\ProductController();
 
         // Mock the request parameters
-        $controller->request = ['id'=>1000, 'name' => 'Product 1', 'state' => 'abcd', 'zip'=>'12345', 'amount' => 1, 'quantity' => 2, 'item' => 'a2b3'];
+        $controller->request = ['id'=>1000, 'name' => 'Product a', 'state' => 'abcd', 'zip'=>'12345', 'amount' => 1, 'quantity' => 2, 'item' => 'a2b3'];
 
         // Mock the data returned by the Product model's getData() method
         $mockData = [
-            ['id'=>1000, 'name' => 'Product 1', 'state' => 'abcd', 'zip'=>'12345', 'amount' => 1, 'quantity' => 2, 'item' => 'a2b3']
+            ['id'=>1000, 'name' => 'Product a', 'state' => 'abcd', 'zip'=>'12345', 'amount' => 1, 'quantity' => 2, 'item' => 'a2b3']
         ];
         // Set the mock Product model in the controller
         $reflection = new ReflectionClass(\App\Controllers\ProductController::class);
@@ -75,11 +75,11 @@ class ProductControllerTest extends \Codeception\Test\Unit
         $controller = new \App\Controllers\ProductController();
 
         // Mock the request parameters
-        $controller->request = ['id'=>1000, 'name' => 'Product 1', 'state' => 'aass', 'zip'=>'axxa', 'amount' => 1, 'quantity' => 2, 'item' => 'a'];
+        $controller->request = ['id'=>1000, 'name' => 'Product a', 'state' => 'aass', 'zip'=>'12345', 'amount' => 1, 'quantity' => 2, 'item' => 'a'];
 
         // Mock the data returned by the Product model's getData() method
         $mockData = [
-            ['id'=>1000, 'name' => 'Product 1', 'state' => 'a', 'zip'=>'a', 'amount' => 1, 'quantity' => 222, 'item' => 'a']
+            ['id'=>1000, 'name' => 'Product a', 'state' => 'a', 'zip'=>'12345', 'amount' => 1, 'quantity' => 222, 'item' => 'a']
         ];
         
         // Set the mock Product model in the controller
@@ -97,15 +97,31 @@ class ProductControllerTest extends \Codeception\Test\Unit
 
         // Mock the request parameters
         $request = [
-            "amount" => "12",
+            "amount" => "12.22",
             "name" => "hars",
             "quantity" => "1",
             "state" => "jars"
         ];
 
         
-        $result = $product->validateProduct($request);
-        $this->assertEquals(false,$result);
+        $errors = $product->validateProduct($request);
+        $this->assertEquals(0,count($errors));
+    }
+    public function testValidatorValidateAmount()
+    {
+        $product = new \App\Models\Product();
+
+        // Mock the request parameters
+        $request = [
+            "amount" => "12.123",
+            "name" => "hars",
+            "quantity" => "1",
+            "state" => "jars"
+        ];
+
+        
+        $errors = $product->validateProduct($request);
+        $this->assertEquals(1,count($errors));
     }
 
 }

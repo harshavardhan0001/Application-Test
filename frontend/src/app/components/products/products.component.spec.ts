@@ -2,7 +2,7 @@ import { HttpClientTestingModule,HttpTestingController } from '@angular/common/h
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AgGridModule } from 'ag-grid-angular';
-import { BaseService } from '../services/base.service';
+import { BaseService } from '../../services/base.service';
 import { AddProductComponent } from './add-product/add-product.component';
 import { ProductsComponent } from './products.component';
 
