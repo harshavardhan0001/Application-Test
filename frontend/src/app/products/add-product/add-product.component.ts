@@ -1,9 +1,8 @@
-import { Component, Input, TemplateRef } from '@angular/core';
+import { Component} from '@angular/core';
 import { NgbModal,NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { Output, EventEmitter } from '@angular/core';
 import { Iproduct } from '../models/iproduct';
-import { FormGroup, FormControl, Validators, FormBuilder } from '@angular/forms';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormGroup,  Validators, FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-add-product',

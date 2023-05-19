@@ -88,14 +88,16 @@ export class ProductsComponent {
           remove: [params.node.data]
         });
         this.baseService.deleteProducts(params.node.data).subscribe((resp) => {
-           resp.status != "error" ? this.showNotifyPop({success:true,msg:resp.message}) : this.showNotifyPop({success:false,msg:resp.message}) 
+          this.showNotifyPop({success:true,msg:resp.message})
+            // : this.showNotifyPop({success:false,msg:resp.message}) 
         });
       }
 
       if (action === "update") {
         params.api.stopEditing(false);
         this.baseService.updateProducts(params.node.data).subscribe((resp) => {
-          resp.status != "error" ? this.showNotifyPop({success:true,msg:resp.message}) : this.showNotifyPop({success:false,msg:resp.message}) 
+          this.showNotifyPop({success:true,msg:resp.message})
+          //  : this.showNotifyPop({success:false,msg:resp.message}) 
         });
 
       }

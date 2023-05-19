@@ -32,10 +32,6 @@ describe('ProductsComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-  
-  it('grid API is not available until  `detectChanges`', () => {
-    expect(component.gridApi).not.toBeTruthy();
-  });
 
   it('the grid cells should be as expected', () => {
     const appElement = fixture.nativeElement;

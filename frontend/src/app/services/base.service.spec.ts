@@ -18,7 +18,6 @@ describe('BaseService', () => {
 
   it('should call getProducts and return an array of Products', () => {
     const products = {
-      "status" : "success",
       "message" : "Products retrived successfully",
       "data" : []
     } ;

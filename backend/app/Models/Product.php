@@ -6,7 +6,6 @@ class Product
 {
 
     use Helper;
-    private $csvFilePath = __DIR__.'/../../storage/data.csv';
     private $header = ['id','name','state','zip','amount','quantity','item'];
     
     public function getData()
@@ -16,11 +15,13 @@ class Product
     }
 
     public function addProduct($data,$request){
-        if(count($data))
-            $id = $data[count($data)-1]["id"] + 1;
-        else {
-            $id = 1;
+        // If no data in file, sets id to 1
+        if(isset($request['id'])) {
+            $id = $request['id'];
+        } else {
+            $id = 1 ? count($data) == 0 : $data[count($data)-1]["id"] + 1;
         }
+
         $newRow = [];
         $newRow["id"] = $id;
         $newRow["name"] = $request["name"];
@@ -58,7 +59,7 @@ class Product
             ->key('quatity', v::allOf(v::intVal(), v::positive(),v::notEmpty()))
             ->key('item', v::alnum());
 
-        $result = $validation->validate($request); // Validate the request data
+        $result = $validation->validate($request);
         return $result;
     }
 }
