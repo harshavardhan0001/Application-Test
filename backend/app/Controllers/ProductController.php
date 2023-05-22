@@ -29,6 +29,7 @@ class ProductController
         $this->returnResponse(200, $data, "Products retrieved successfully");
     }
 
+    // Validates and insert product into csv
     public function addProduct()
     {
         $errors = $this->productModel->validateProduct($this->request);
@@ -52,6 +53,7 @@ class ProductController
         }
     }
 
+    // Finds product by id and updates the product
     public function updateProduct()
     {
 
@@ -75,6 +77,7 @@ class ProductController
         }
     }
 
+    // Finds product by id and deletes the product in csv
     public function deleteProduct()
     {
         $errors = $this->productModel->validateProduct($this->request);

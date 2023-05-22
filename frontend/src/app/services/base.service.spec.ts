@@ -31,7 +31,6 @@ describe('BaseService', () => {
 
     //4
     req.flush(products);
-
   });
 
   it('should be created', () => {
