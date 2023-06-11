@@ -29,10 +29,10 @@ export class AddProductComponent {
     this.newProduct = this.fb.group({
       name: ["", [Validators.required, Validators.minLength(4), Validators.pattern('[a-zA-Z ]*') ]],
       state: ["", [Validators.required, Validators.minLength(4)]],
-      zip: ["", [ Validators.maxLength(5),Validators.minLength(5), Validators.pattern(/^-?(0|[1-9]\d*)?$/) ]],
+      zip: ["", [ Validators.required,Validators.maxLength(5),Validators.minLength(5), Validators.pattern(/^-?(0|[1-9]\d*)?$/) ]],
       amount: ["", [Validators.required, Validators.pattern(/^(?:[0-9]+(?:\.[0-9]{0,2})?)?$/) ]],
       quantity: ["", [Validators.required, Validators.pattern(/^-?(0|[1-9]\d*)?$/) ]],
-      item: ["", [Validators.maxLength(6) ]]
+      item: ["", [ Validators.required,Validators.maxLength(6) ]]
     });
   }
 

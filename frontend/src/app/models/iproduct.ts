@@ -1,5 +1,5 @@
 export interface Iproduct {
-    id :number,
+    id?:number,
     name: string,
     state: string,
     zip: string,

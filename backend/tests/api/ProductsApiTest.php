@@ -1,6 +1,6 @@
 <?php
 
-class GetProductsCest
+class ProductApiTest
 {
     public function _before(ApiTester $I)
     {

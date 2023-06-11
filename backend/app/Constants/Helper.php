@@ -46,7 +46,7 @@ trait Helper {
         try {
             // Create file if not exists
             if (!file_exists($this->csvFilePath)) {
-                fopen($this->csvFilePath, 'w') or die("Can't create file");
+                fopen($this->csvFilePath, 'w') or $this->returnResponse(500,null,"Something went wrong!");;
             }
             $header = NULL;
             $data = array();

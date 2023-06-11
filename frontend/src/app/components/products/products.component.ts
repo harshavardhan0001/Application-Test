@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ColDef } from 'ag-grid-community';
+import { ColDef, GridOptions } from 'ag-grid-community';
 import { BaseService } from '../../services/base.service';
 import { NotifyService } from '../../services/notify.service';
 import { Iproduct } from '../../models/iproduct';
