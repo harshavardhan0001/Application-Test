@@ -1,9 +1,7 @@
 <?php
 
-namespace App\Controllers;
-
-use App\Models\Product;
-use Helper;
+require_once __DIR__ . '/../Models/Product.php';
+require_once __DIR__ . '/../Constants/Helper.php';
 
 class ProductController
 {
@@ -27,6 +25,12 @@ class ProductController
     {
         $data = $this->productModel->getData();
         $this->returnResponse(200, $data, "Products retrieved successfully");
+    }
+
+    // Returns products, Gets data from csv at Helper trait 
+    public function getProduct($id)
+    {
+        print_r($id);
     }
 
     // Validates and insert product into csv

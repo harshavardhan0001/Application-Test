@@ -1,7 +1,6 @@
 <?php 
-namespace App\Models;
-use Helper;
-use Respect\Validation\Validator as v;
+// use Respect\Validation\Validator;
+require_once __DIR__ . '/../Constants/Helper.php';
 class Product
 {
 
@@ -51,35 +50,35 @@ class Product
 
     public function validateProduct($request) {
         // Validate request parameters
-        $name = v::notEmpty()->alpha(' ')->validate($request['name']);
-        if(!$name) {
-            return ['Invalid field value for name.'];
-        }
-        $quantity = v::allOf(v::intVal(), v::positive(),v::notEmpty())->validate($request['quantity']);
-        if(!$quantity) {
-            return ['Invalid field value for quantity.'];
-        }
-        $state = v::notEmpty()->alpha(' ')->validate($request['state']);
-        if(!$state) {
-            return ['Invalid field value for state.'];
-        }
-        $amount = v::notEmpty()->regex('/^(?:[0-9]+(?:\.[0-9]{0,2})?)?$/')->validate($request['amount']);
-        if(!$amount) {
-            return ['Invalid field value for amount.'];
-        }
-        if(isset($request['item'])) {
+        // $name = Validator::notEmpty()->alpha(' ')->Validatoralidate($request['name']);
+        // if(!$name) {
+        //     return ['Invalid field value for name.'];
+        // }
+        // $quantity = v::allOf(v::intVal(), v::positive(),v::notEmpty())->validate($request['quantity']);
+        // if(!$quantity) {
+        //     return ['Invalid field value for quantity.'];
+        // }
+        // $state = v::notEmpty()->alpha(' ')->validate($request['state']);
+        // if(!$state) {
+        //     return ['Invalid field value for state.'];
+        // }
+        // $amount = v::notEmpty()->regex('/^(?:[0-9]+(?:\.[0-9]{0,2})?)?$/')->validate($request['amount']);
+        // if(!$amount) {
+        //     return ['Invalid field value for amount.'];
+        // }
+        // if(isset($request['item'])) {
 
-            $item = v::optional(v::alnum())->validate($request['item']);
-            if(!$item) {
-                return ['Invalid field value for item.'];
-            }
-        }
-        if(isset($request['zip'])) {
-            $zip = v::optional(v::length(5,5))->validate($request['zip']);
-            if(!$zip) {
-                return ['Invalid field value for zip.'];
-            }
-        }
+        //     $item = v::optional(v::alnum())->validate($request['item']);
+        //     if(!$item) {
+        //         return ['Invalid field value for item.'];
+        //     }
+        // }
+        // if(isset($request['zip'])) {
+        //     $zip = v::optional(v::length(5,5))->validate($request['zip']);
+        //     if(!$zip) {
+        //         return ['Invalid field value for zip.'];
+        //     }
+        // }
         return [];
     }
 }

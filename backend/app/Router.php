@@ -1,56 +1,48 @@
 <?php 
-
-namespace App;
-
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\Routing\RequestContext;
-use Symfony\Component\Routing\RouteCollection;
-use Symfony\Component\Routing\Matcher\UrlMatcher;
-use Symfony\Component\Routing\Exception\MethodNotAllowedException;
-use Symfony\Component\Routing\Exception\ResourceNotFoundException;
-use Symfony\Component\Routing\Exception\NoConfigurationException;
-
-class Router
-{
-    public function __invoke(RouteCollection $routes)
+class Router {
+    public $subRoute = "";
+    function __construct($subRoute) {
+        $this->subRoute = $subRoute;
+    }
+    function router($httpMethods, $route, $classObject, $classfunction)
     {
-        $context = new RequestContext();
-        $request = Request::createFromGlobals();
-        $context->fromRequest(Request::createFromGlobals());
-
-        // Routing can match routes with incoming requests
-        $matcher = new UrlMatcher($routes, $context);
-        try {
-            $arrayUri = explode('?', $_SERVER['REQUEST_URI']);
-            $matcher = $matcher->match($arrayUri[0]);
-    
-            // Cast params to int if numeric
-            array_walk($matcher, function(&$param)
-            {
-                if(is_numeric($param)) 
-                {
-                    $param = (int) $param;
-                }
-            });
-            
-            $className = '\\App\\Controllers\\' . $matcher['controller'];
-            $classInstance = new $className();
-    
-            // Add routes as paramaters to the next class
-            $params = array_merge(array_slice($matcher, 2, -1), array('routes' => $routes));
-
-            call_user_func_array(array($classInstance, $matcher['method']), $params);
-            
-        } catch (MethodNotAllowedException $e) {
-            header("HTTP/1.0 405 Not Allowed");
-        } catch (ResourceNotFoundException $e) {
-            header("HTTP/1.0 404 Not Found");
-        } catch (NoConfigurationException $e) {
-            echo 'Configuration does not exists.';
+        $route = '^/'.$this->subRoute.'/'.$route.'$';
+        $route = str_replace('//', '/', $route) ;
+        
+        static $path = null;
+        if ($path === null) {
+            $path = parse_url($_SERVER['REQUEST_URI'])['path'];
+            $scriptName = dirname(dirname($_SERVER['SCRIPT_NAME']));
+            $scriptName = str_replace('\\', '/', $scriptName);
+            $len = strlen($scriptName);
+            if ($len > 0 && $scriptName !== '/') {
+                $path = substr($path, $len);
+            }
         }
+        if(substr($path, -1) != '/') {
+            $route = str_replace('/$', '$', $route) ;
+        }
+        
+        if (!in_array($_SERVER['REQUEST_METHOD'], (array) $httpMethods)) {
+            return;
+        }
+
+        $matches = null;
+        $regex = '/' . str_replace('/', '\/', $route) . '/';
+        if (!preg_match_all($regex, $path, $matches)) {
+            return;
+        }
+        if (empty($matches)) {
+            call_user_func(array($classObject, $classfunction));
+        } else {
+            $params = array();
+            foreach ($matches as $k => $v) {
+                if (!is_numeric($k) && !isset($v[1])) {
+                    $params[$k] = $v[0];
+                }
+            }
+            call_user_func(array($classObject, $classfunction),$params);
+        }
+        exit();
     }
 }
-
-// Invoke
-$router = new Router();
-$router($routes);

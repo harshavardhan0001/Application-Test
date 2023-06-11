@@ -23,17 +23,17 @@ export class BaseService {
         );
     }
     updateProducts(data: Iproduct) {
-        return this.http.post<Iresponse>(this.apiUrl+"products/update",data).pipe(
+        return this.http.put<Iresponse>(this.apiUrl+"products",data).pipe(
             catchError(err => this.handleError(err))
         );
     }
     deleteProducts(data: Iproduct) {
-        return this.http.put<Iresponse>(this.apiUrl+"products/delete",data).pipe(
+        return this.http.put<Iresponse>(this.apiUrl+"product/delete",data).pipe(
             catchError(err => this.handleError(err))
         );
     }
     addProducts(data: any) {
-        return this.http.post<Iresponse>(this.apiUrl+"products/add",data).pipe(
+        return this.http.post<Iresponse>(this.apiUrl+"products",data).pipe(
             catchError(err => this.handleError(err))
         );
     }
